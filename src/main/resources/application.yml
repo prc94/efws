@@ -10,7 +10,3 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
-  security:
-    user:
-      name: admin
-      password: 123qweQWE
