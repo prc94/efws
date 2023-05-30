@@ -26,6 +26,11 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 
+	implementation("io.minio:minio:8.5.3")
+
+	implementation("org.bouncycastle:bcprov-jdk18on:1.73")
+	implementation("org.bouncycastle:bcpg-jdk18on:1.73")
+
 	implementation("org.mapstruct:mapstruct:1.5.5.Final")
 	kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
 
@@ -41,6 +46,7 @@ allOpen {
 	annotation("jakarta.persistence.Entity")
 	annotation("jakarta.persistence.Embeddable")
 	annotation("jakarta.persistence.MappedSuperclass")
+	annotation("org.mapstruct.Mapper")
 }
 
 tasks.withType<KotlinCompile> {
