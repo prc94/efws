@@ -4,7 +4,6 @@ plugins {
 	id("org.springframework.boot") version "3.1.0"
 	id("io.spring.dependency-management") version "1.1.0"
 	kotlin("jvm") version "1.8.21"
-	kotlin("kapt") version "1.8.21"
 	kotlin("plugin.spring") version "1.8.21"
 	kotlin("plugin.jpa") version "1.8.21"
 }
@@ -25,28 +24,11 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
-
-	implementation("io.minio:minio:8.5.3")
-
-	implementation("org.bouncycastle:bcprov-jdk18on:1.73")
-	implementation("org.bouncycastle:bcpg-jdk18on:1.73")
-
-	implementation("org.mapstruct:mapstruct:1.5.5.Final")
-	kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
-
+	implementation("io.minio:minio:8.4.3")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-
 	runtimeOnly("com.h2database:h2")
-
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
-}
-
-allOpen {
-	annotation("jakarta.persistence.Entity")
-	annotation("jakarta.persistence.Embeddable")
-	annotation("jakarta.persistence.MappedSuperclass")
-	annotation("org.mapstruct.Mapper")
 }
 
 tasks.withType<KotlinCompile> {
