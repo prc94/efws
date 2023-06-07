@@ -9,6 +9,7 @@ import java.net.URL
 class Storage(
     var name: String,
     var url: URL,
+    var bucketName: String,
     var accessKey: String,
     var secretKey: String,
     @Id @GeneratedValue var id: Int? = null
