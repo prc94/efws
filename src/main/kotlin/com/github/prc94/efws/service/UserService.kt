@@ -2,7 +2,6 @@ package com.github.prc94.efws.service
 
 import com.github.prc94.efws.data.dto.*
 import com.github.prc94.efws.data.entity.User
-import com.github.prc94.efws.data.mapper.FileMapper
 import com.github.prc94.efws.data.mapper.KeyMapper
 import com.github.prc94.efws.data.mapper.UserMapper
 import com.github.prc94.efws.data.repository.UserRepository
@@ -19,8 +18,7 @@ class UserService(
     private val userRepository: UserRepository,
     private val userMapper: UserMapper,
     private val passwordEncoder: PasswordEncoder,
-    private val keyMapper: KeyMapper,
-    private val fileMapper: FileMapper
+    private val keyMapper: KeyMapper
 ) : UserDetailsService {
     init {
         if (!userRepository.existsByUsername("admin"))
@@ -101,12 +99,5 @@ class UserService(
                 user.keys.removeIf { it.id == keyId }
             }
 
-    fun findFileById(userId: Int, fileId: Int): Optional<FileDto> =
-        userRepository.findById(userId)
-            .flatMap { user -> Optional.ofNullable(user.files.find { it.id == fileId }) }
-            .map(fileMapper::toDto)
 
-    fun findAllFiles(userId: Int): Optional<List<FileDto>> =
-        userRepository.findById(userId)
-            .map { it.files.map(fileMapper::toDto) }
 }

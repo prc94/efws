@@ -53,15 +53,15 @@ class StorageService(val storageRepository: StorageRepository,
     }
 
     //TODO implement proper exceptions for orElseThrow
-    fun getPresignedUrl(storageId: Int, fileId: Int, method: Method): String =
-        storageRepository.findById(storageId)
+    fun getPresignedUrl(fileId: Int, method: String): String =
+        fileRepository.findById(fileId)
             .orElseThrow()
-            .let {
-                it.client.getPresignedObjectUrl(
+            .let { file ->
+                file.storage.client.getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
-                        .bucket(it.bucketName)
-                        .`object`(fileRepository.findById(fileId).orElseThrow().path)
-                        .method(method)
+                        .bucket(file.storage.bucketName)
+                        .`object`(file.path)
+                        .method(Method.valueOf(method))
                         .expiry(4, TimeUnit.HOURS)
                         .build()
                 )
