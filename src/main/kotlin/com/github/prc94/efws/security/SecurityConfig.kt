@@ -1,19 +1,19 @@
-package com.github.prc94.efws.config
+package com.github.prc94.efws.security
 
+import com.github.prc94.efws.data.repository.UserRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.access.PermissionEvaluator
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.core.authority.AuthorityUtils
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.provisioning.JdbcUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
-import javax.sql.DataSource
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 class SecurityConfig {
 
     @Bean
@@ -21,18 +21,6 @@ class SecurityConfig {
         http.authorizeHttpRequests { it.anyRequest().authenticated() }
             .formLogin { }
             .build()
-
-    @Bean
-    fun userDetailsService(dataSource: DataSource) =
-        JdbcUserDetailsManager(dataSource)
-            .also {
-                if (!it.userExists("admin"))
-                    it.createUser(
-                        User("admin", "{noop}admin",
-                            AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN")
-                        )
-                    )
-            }
 
     @Bean
     fun passwordEncoder(): PasswordEncoder =

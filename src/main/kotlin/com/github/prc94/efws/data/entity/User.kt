@@ -1,6 +1,7 @@
 package com.github.prc94.efws.data.entity
 
 import com.github.prc94.efws.util.IdHolder
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -13,14 +14,16 @@ import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.UserDetails
 
 @Entity
-@Table(name = "user_accounts")
+@Table(name = "USER_ACCOUNT")
 class User(
     @Column(unique = true) var username: String,
     var password: String,
     var isAdmin: Boolean,
     var isEnabled: Boolean,
-    @OneToMany val keys: MutableList<Key> = mutableListOf(),
-    @OneToMany val files: MutableList<FileEntity> = mutableListOf(),
+    @OneToMany(cascade = [CascadeType.ALL])
+    val keys: MutableList<Key> = mutableListOf(),
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "owner")
+    val files: MutableList<FileEntity> = mutableListOf(),
     @Id @GeneratedValue val id: Int? = null
 ) {
 

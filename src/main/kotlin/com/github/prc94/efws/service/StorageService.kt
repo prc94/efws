@@ -40,9 +40,17 @@ class StorageService(val storageRepository: StorageRepository,
         storageRepository.findByName(name)
             .map(mapper::toDto)
 
+    fun findStorage(id: Int): Optional<StorageDto> =
+        storageRepository.findById(id)
+            .map(mapper::toDto)
+
     fun findAll(): List<StorageDto> =
         storageRepository.findAll()
             .map(mapper::toDto)
+
+    fun deleteStorage(id: Int) {
+        storageRepository.deleteById(id)
+    }
 
     //TODO implement proper exceptions for orElseThrow
     fun getPresignedUrl(storageId: Int, fileId: Int, method: Method): String =
@@ -54,9 +62,8 @@ class StorageService(val storageRepository: StorageRepository,
                         .bucket(it.bucketName)
                         .`object`(fileRepository.findById(fileId).orElseThrow().path)
                         .method(method)
-                        .expiry(8, TimeUnit.HOURS)
+                        .expiry(4, TimeUnit.HOURS)
                         .build()
                 )
             }
-
 }

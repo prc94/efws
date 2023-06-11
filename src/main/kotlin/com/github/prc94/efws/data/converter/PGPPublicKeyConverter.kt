@@ -6,9 +6,10 @@ import org.bouncycastle.openpgp.PGPPublicKeyRing
 import org.bouncycastle.openpgp.PGPUtil
 import org.bouncycastle.openpgp.operator.bc.BcKeyFingerprintCalculator
 import org.mapstruct.Mapper
+import org.mapstruct.MappingConstants
 import java.io.ByteArrayOutputStream
 
-@Mapper
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 class PGPPublicKeyConverter {
     fun keyToString(key: PGPPublicKey): String =
         ByteArrayOutputStream()

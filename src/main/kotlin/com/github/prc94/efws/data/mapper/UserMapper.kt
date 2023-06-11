@@ -8,5 +8,4 @@ import org.mapstruct.MappingConstants
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 interface UserMapper {
     fun toDto(entity: User): UserDto
-    fun toEntity(dto: UserDto): User
 }
