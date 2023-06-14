@@ -6,7 +6,4 @@ import org.springframework.stereotype.Repository
 import java.util.Optional
 
 @Repository
-interface StorageRepository : JpaRepository<Storage, Int> {
-
-    fun findByName(name: String): Optional<Storage>
-}
+interface StorageRepository : JpaRepository<Storage, Int>

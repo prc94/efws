@@ -36,10 +36,6 @@ class StorageService(val storageRepository: StorageRepository,
                 .let(mapper::toDto)
         }
 
-    fun findStorage(name: String): Optional<StorageDto> =
-        storageRepository.findByName(name)
-            .map(mapper::toDto)
-
     fun findStorage(id: Int): Optional<StorageDto> =
         storageRepository.findById(id)
             .map(mapper::toDto)
