@@ -5,6 +5,9 @@ import com.github.prc94.efws.data.entity.User
 import com.github.prc94.efws.data.mapper.KeyMapper
 import com.github.prc94.efws.data.mapper.UserMapper
 import com.github.prc94.efws.data.repository.UserRepository
+import com.github.prc94.efws.exception.EntityCreationException
+import com.github.prc94.efws.exception.EntityNotFoundException
+import com.github.prc94.efws.exception.UsernameNotAvailableException
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -37,15 +40,15 @@ class UserService(
                     .let(userRepository::save)
                     .let(userMapper::toDto)
             else
-                TODO("Create a proper exception")
+                throw EntityCreationException("User with username $username already exists")
         }
 
     fun updateUser(id: Int, userDto: UserDto): UserDto =
         userRepository.findById(id)
-            .orElseThrow { TODO("Create a proper exception") }
+            .orElseThrow { EntityNotFoundException("User with id $id") }
             .let { user ->
                 if (userDto.username != user.username && userRepository.existsByUsername(userDto.username))
-                    TODO("Throw a proper exception when username is not available")
+                    throw UsernameNotAvailableException(userDto.username)
 
                 user.apply {
                     username = userDto.username
@@ -98,6 +101,5 @@ class UserService(
             .ifPresent { user ->
                 user.keys.removeIf { it.id == keyId }
             }
-
 
 }
