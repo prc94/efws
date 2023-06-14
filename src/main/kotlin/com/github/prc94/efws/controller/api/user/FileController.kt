@@ -44,7 +44,7 @@ class FileController(
         TODO("Implement delete file")
 
     //Modify permission evaluator accordingly
-    @PreAuthorize("#hasPermission(#id, 'file', #method)")
+    @PreAuthorize("#hasPermission(#id, 'file_link', #method)")
     @GetMapping("/{id}/link")
     fun getLink(@PathVariable userId: Int, @PathVariable id: Int, method: String): ResponseEntity<String> =
         ResponseEntity.ok(storageService.getPresignedUrl(id, method))
